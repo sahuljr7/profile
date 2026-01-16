@@ -1,0 +1,107 @@
+#profile-wrapper .content-title {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    text-transform: uppercase;
+    padding-left: 20px;
+    margin-bottom: 20px !important;
+    margin: 0px;
+    color: #444444;
+    margin-top: -20px;
+}
+#profile-wrapper .label-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #555555;
+    line-height: 16px;
+    text-align: left;
+    font-weight: normal;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+#profile-wrapper .field-text {
+    font-size: 18px;
+    color: #555555;
+    line-height: 16px;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: 0px;
+    font-family: 'Source Sans Pro', sans-serif;
+    word-break: break-all;
+}
+
+#profile-wrapper .change-edit {
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    color: #3BC9F5;
+    cursor: pointer;
+}
+
+#profile-wrapper img {
+    cursor: pointer;
+}
+
+#profile-wrapper p {
+    margin: 0 0 2px !important;
+
+}
+#profile-wrapper .add-user {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 15px;
+    color: #3BC9F5;
+    cursor: pointer;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+#profile-wrapper .badgePrimary {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: left;
+    font: normal normal 600 8px/11px Open Sans;
+    letter-spacing: 0px;
+    background-color: #F7931D;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+#profile-wrapper .badgeAdmin {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: left;
+    font: normal normal 600 8px/11px Open Sans;
+    letter-spacing: 0px;
+    background-color: #ce0058;
+    color: #FFFFFF;
+    border-radius: 0px;
+}
+#profile-wrapper .account-user {
+    margin-bottom: 50px;
+}
+#profile-wrapper .edit-button {
+    float: right;
+}
+
+#profile-wrapper .add-user-button {
+    font-size: 24px;
+    color: #3BC9F5;
+    cursor: pointer;
+}
+
+#profile-wrapper .panel-body {
+    padding: 15px 0 15px 0 !important;
+}
+
+#profile-change-modal .validation-pattern {
+color:#a94442;
+}

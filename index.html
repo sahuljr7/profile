@@ -1,0 +1,143 @@
+<div id="profile-wrapper" class="report-wrapper v2 container">
+    <top-bar page-title="{{$locale.profile.profile_title}}" date-time-off="true" />
+
+    <!---------------- Account Information -------------------------->
+    <main-section section-style="content" popover-off="true">
+        <div class="no-margin">
+            <div class="col-sm-12 no-padding content-title">{{$locale.profile.profile_account_info_title}}</div>
+        </div>
+        <div class=" col-sm-4 col-lg-4 account-user" ng-repeat="uItem in uiModel.profileUI.accountILabelItems"
+            ng-if="model.ProfileDetailData[uItem.field]!=-1">
+            <span class="label-title">{{uItem.label}}</span>
+            <p class="field-text" ng-if="uItem.label !='Date Created'">{{model.ProfileDetailData[uItem.field]}} </p>
+            <p class="field-text" ng-if="uItem.label =='Date Created'">
+                {{model.ProfileDetailData[uItem.field] | toDateObj | date:'MMM dd, yyyy' }} 
+            </p>
+        </div>
+    </main-section>
+    <!---------------- Standard User List -------------------------->
+    <main-section section-style="content" popover-off="true" ng-if="!isAdmin() && !isReadOnlyUser()">
+        <div class="row no-margin">
+            <div class="col-sm-12 no-padding content-title">
+                {{$locale.profile.profile_user_title}}&nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="no-margin">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{standardUserList.firstName}} {{standardUserList.lastName}} &nbsp;&nbsp;
+                    <span class="edit-button" ng-if="!isReadOnlyUser()">
+                        <img ng-demo ng-click="profileEditUser(standardUserList,false)" src="/static/i/v2/icon-feather-edit.svg" width="20px"
+                            height="20px" alt="">
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class=" col-sm-4 col-lg-4" ng-repeat="uItem in uiModel.profileUI.standardUserItems">
+                        <span class="label-title">{{uItem.label}}</span>
+                        <p class="field-text " ng-if="uItem.label =='Name'">
+                            {{standardUserList.firstName}} {{standardUserList.lastName}}
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='2FA Phone'">
+                            <span ng-if="faSetup.activeSms">{{standardUserList[uItem.field] | tel}}</span>
+                            <span ng-if="!faSetup.activeSms">-</span>
+                        </p>
+                        <p class="field-text"  ng-if="uItem.label !='Last Login' && uItem.label !=='Name' && uItem.label !=='2FA Phone'">{{standardUserList[uItem.field]}} </p>
+                        <p class="field-text" ng-if="uItem.label =='Last Login'">
+                            <span ng-if="standardUserList[uItem.field] !== null">{{(standardUserList[uItem.field] | toDateObj | date:'MMM dd, yyyy') || "-"}} </span>
+                            <span ng-if="standardUserList[uItem.field] == null">-</span>
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='Password'">
+                            <span>............ </span><a ng-if="!isInternalUser()" class="change-edit" ng-demo
+                                ng-click="changePasswordWindow()">{{$locale.profile.profile_account_info_change_password_link_text}}</a>
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='Two-Factor Authentication'" ng-class="{'disabled':!showSSO('Edit_TwoFA')}">
+                            <span ng-if="faSetup.activeSms">{{$locale.profile.profile_user_2fa_enabled_text}} </span>
+                            <span ng-if="faSetup.activeEmail">{{$locale.profile.profile_user_2fa_enabled_email}} </span>
+                            <span ng-if="!faSetup.activeSms && !faSetup.activeEmail">{{$locale.profile.profile_user_2fa_disabled}}</span>
+                            <a class="change-edit" ng-demo href="/#/two-factor-setup">{{$locale.profile.profile_user_info_edit}}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main-section>
+    <!---------------- Admin User List-------------------------->
+    <main-section section-style="content" popover-off="true" loading="loader" ng-if="isAdmin() || isReadOnlyUser()">
+        <div class="row no-margin">
+            <div class="col-sm-12 no-padding content-title">
+                {{$locale.profile.profile_user_title}}&nbsp;&nbsp;
+                <span class="add-user-button" ng-if="!$rootScope.user.business.diadOnly && !isReadOnlyUser()">
+                    <em ng-demo ng-click="profileAddUser()" class="fa fa-plus-circle"></em>
+                </span>
+                <span ng-demo ng-if="!$rootScope.user.business.diadOnly && !isReadOnlyUser()" class="add-user" ng-click="profileAddUser()">&nbsp;{{$locale.profile.profile_user_info_adduser}}</span>
+            </div>
+        </div>
+        <!---------------- Panel-------------------------->
+        <div class="no-margin">
+            <div class="panel panel-default" ng-repeat="uItems in adminUserList" ng-if="uItems.currentLoginUser">
+                <div class="panel-heading">{{uItems.firstName}} {{uItems.lastName}}  &nbsp;&nbsp;
+                    <span ng-if="uItems.admin || uItems.diadAccountId" class="badgeAdmin bg-secondary">{{$locale.profile.profile_admin_title}}
+                    </span>
+                    <span class="edit-button" ng-if="!uItems.diadAccountId && !isReadOnlyUser()">
+                        <img ng-demo ng-click="profileEditUser(uItems,false)" src="/static/i/v2/icon-feather-edit.svg" width="20px"
+                            height="20px" alt="">
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-3 col-lg-3" ng-repeat="uItem in uiModel.profileUI.profileUserItems">
+                        <span class="label-title">{{uItem.label}}</span>
+                        <p class="field-text" ng-if="uItem.label =='2FA Phone'">
+                            <span ng-if="faSetup.activeSms">{{uItems[uItem.field] | tel}}</span>
+                            <span ng-if="!faSetup.activeSms">-</span>
+                        </p>
+                        <p class="field-text" ng-if="uItem.label !=='Last Login' && uItem.label !='2FA Phone'">
+                            {{uItems[uItem.field]}} </p>
+                        <p class="field-text" ng-if="uItem.label =='Last Login'">
+                            {{(uItems[uItem.field] | date:'MMM dd, yyyy') || "-"}}
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='Two-Factor Authentication'"
+                            ng-class="{'disabled':!showSSO('Edit_TwoFA')}">
+                            <span ng-if="faSetup.activeSms">{{$locale.profile.profile_user_2fa_enabled_text}} </span>
+                            <span ng-if="faSetup.activeEmail">{{$locale.profile.profile_user_2fa_enabled_email}} </span>
+                            <span ng-if="!faSetup.activeSms && !faSetup.activeEmail">{{$locale.profile.profile_user_2fa_disabled}}</span>
+                            <a class="change-edit" ng-demo
+                                href="/#/two-factor-setup">{{$locale.profile.profile_user_info_edit}}
+                            </a>
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='Password'">
+                            <span>............ </span><a ng-if="!isInternalUser()" class="change-edit" ng-demo
+                                ng-click="changePasswordWindow()">{{$locale.profile.profile_account_info_change_password_link_text}}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-repeat="uItems in adminUserList | orderObjectBy:'currentLoginUser':true | orderObjectBy:'admin':true" ng-if="!uItems.currentLoginUser">
+                <div class="panel-heading">{{uItems.firstName}} {{uItems.lastName}} &nbsp;&nbsp;
+                    <span ng-if="uItems.admin || uItems.diadAccountId" class="badgeAdmin bg-secondary">{{$locale.profile.profile_admin_title}}
+                    </span>
+                    <span class="edit-button" ng-if="!uItems.diadAccountId && !isReadOnlyUser()">
+                        <img ng-demo ng-click="profileEditUser(uItems,true)" src="/static/i/v2/icon-feather-edit.svg" width="20px"
+                            height="20px" alt="">
+                        <img ng-demo ng-click="profileDeleteUser(uItems)" src="/static/i/v2/delete-icon.svg" width="20px"
+                            height="20px" alt="">
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class=" col-sm-3 col-lg-3" ng-repeat="uItem in uiModel.profileUI.adminList">
+                        <span class="label-title"> {{uItem.label}} </span>
+                        <p class="field-text" ng-if="uItem.label !='Last Login' && uItem.label !='2FA Phone' && uItem.label !='Password'">{{uItems[uItem.field]}} </p>
+                        <p class="field-text" ng-if="uItem.label =='Last Login'">
+                            {{(uItems[uItem.field] | date:'MMM dd, yyyy') || "-"}}
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='2FA Phone'">
+                            <span ng-if="faSetup.activeSms">{{uItems[uItem.field] | tel}}</span>
+                            <span ng-if="!faSetup.activeSms">-</span>
+                        </p>
+                        <p class="field-text" ng-if="uItem.label =='Password'">
+                            ................
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main-section>
+</div>

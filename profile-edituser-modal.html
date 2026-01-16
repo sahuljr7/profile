@@ -1,0 +1,58 @@
+<div class="profile-modal-template profile-modal-content" id="profile-change-modal">
+    <div class="profile-header modal-header"></div>
+    <div class="modal-body">
+        <div ng-show="!$ctrl.profileSuccess">
+            <div class="section-icon" style="float: right;">
+                <span ng-click="$ctrl.cancel()"> <img src="/static/i/v2/icon-material-close.svg" alt="edit close icon"></span>
+            </div>
+            <h2  class="heading">{{$ctrl.$locale.profile.profile_user_edituser_title}}</h2>
+        </div>
+
+        <form class="frmForgot" role="form" name="frmEditForgot" ng-show="!$ctrl.profileSuccess">
+            <div class="form-group">
+                <input type="text" name="editFirstName" class="form-control" id="txtEditFirstName"
+                    ng-model="$ctrl.UserEditObject.firstName" required="required" />
+                <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_firstname}}</span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="editLastName" class="form-control" id="txtEditLastName"
+                    ng-model="$ctrl.UserEditObject.lastName" required="required" />
+                <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_lastname}}</span>
+            </div>
+            <div class="form-group row" ng-if="$ctrl.type">
+                <div class="col-md-2 col-xs-3" >
+                    <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_adminuser}}</span>
+                </div>
+                <div class="col-md-2" ng-click="$ctrl.editAdminUser('off')" ng-hide="$ctrl.UserEditObject.admin">
+                    <span><img src="/static/i/v2/component-off.svg" alt="editoff"></span>
+                </div>
+                <div class="col-md-2" ng-click="$ctrl.editAdminUser('on')" ng-show="$ctrl.UserEditObject.admin">
+                    <span><img src="/static/i/v2/component-on.svg" alt="editon"></span>
+                </div>
+                <div class="col-md-8">
+                    <p class="footertitle">{{$ctrl.$locale.profile.profile_user_adduser_adminuser_text}}</p>
+                </div>
+            </div>
+            <div class="formmargin row">
+                <div class="col-md-6">
+                    <a type="submit"   ng-disabled="frmEditForgot.$invalid" ng-click="$ctrl.editUser()" class="btn btn-primary btn-lg">{{$ctrl.$locale.profile.profile_user_info_save}}</a>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-default btn-cancel btn-lg"
+                        ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_cancel}}</a>
+                </div>
+            </div>
+        </form>
+        <!--------------------  success ----------------------->
+        <div class="formmargin form-group row" ng-show="$ctrl.profileSuccess">
+            <div class="col-md-12">
+                <span class="profileSuccess"> {{$ctrl.message}}</span>
+            </div>
+            <div class="col-md-4 btnheight">
+                <a class="btn btn-default btn-ok btn-lg"
+                    ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_ok}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="profile-footer modal-footer"></div>
+</div>

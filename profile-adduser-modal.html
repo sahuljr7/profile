@@ -1,0 +1,68 @@
+<div class="profile-modal-popup profile-add-user" id="profile-change-modal">
+    <div class="profile-header modal-header"></div>
+    <div class="modal-body">
+        <div ng-show="!$ctrl.profileSuccess">
+            <div class="section-icon" style="float: right;">
+                <span ng-click="$ctrl.cancel()"> <img src="/static/i/v2/icon-material-close.svg" alt="add close icon"></span>
+            </div>
+            <h2   class="heading">{{$ctrl.$locale.profile.profile_user_info_adduser}}</h2>
+        </div>
+                <!--------------------   Add User -----------------------> 
+        <form class="frmForgot" role="form" name="frmAddForgot"   ng-show="!$ctrl.profileSuccess" ng-submit="$ctrl.reset()" novalidate>  
+            <div class="form-group">
+                <input type="text" name="firstName" maxlength="50" class="form-control" id="txtFirstName" ng-model="$ctrl.firstName"
+                    required="required" />
+                <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_firstname}}</span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="lastName" maxlength="50" class="form-control" id="txtLastName" ng-model="$ctrl.lastName"
+                    required="required"/>
+                <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_lastname}}</span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="email"
+                    pattern='^[a-zA-Z0-9_+&*-]{1,64}(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]{1,255}\.)+[a-zA-Z]{2,63}$' maxlength="320"
+                    ng-change="$ctrl.validateEmailChar($ctrl.email,frmAddForgot)" ng-trim="true" class="form-control" id="txtEmail" ng-model="$ctrl.email" required="required" />
+                <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_email}}</span>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2 col-xs-3">
+                    <span class="desc">{{$ctrl.$locale.profile.profile_user_adduser_adminuser}}</span>                  
+                </div>
+                <div  class="col-md-2" ng-click="$ctrl.adminUser('off')" ng-hide="$ctrl.adminUserOnOff">
+                    <span><img src="/static/i/v2/component-off.svg" alt="addoff"></span>
+                </div>
+                <div  class="col-md-2" ng-click="$ctrl.adminUser('on')" ng-show="$ctrl.adminUserOnOff">
+                    <span><img src="/static/i/v2/component-on.svg" alt="addon"></span>
+                </div>
+              
+                <div class="col-md-8">
+                    <p class="footertitle">{{$ctrl.$locale.profile.profile_user_adduser_adminuser_text}}</p>
+                </div>
+            </div>
+         <!--------------------  Button -----------------------> 
+            <div class="formmargin form-group row">
+                <div class="col-md-6">
+                    <a type="submit"   ng-disabled="frmAddForgot.$invalid"
+                        class="btn btn-primary btn-lg" ng-click="$ctrl.addUser()">{{$ctrl.$locale.profile.profile_user_info_adduser}}</a>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-default btn-cancel btn-lg"
+                        ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_cancel}}</a>
+                </div>
+            </div>
+        </form>
+           <!--------------------  success -----------------------> 
+        <div class="formmargin form-group row"   ng-show="$ctrl.profileSuccess">
+            <div class="col-md-12" >
+                <span class="profileSuccess"> {{$ctrl.message}}</span>
+            </div>
+            <div class="col-md-4 btnheight">
+                <a class="btn btn-default  btn-ok btn-lg"
+                    ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_ok}}</a>
+            </div>
+        </div>
+        </div>
+        <!--------------------   Profile Success ----------------------->
+    <div class="profile-footer modal-footer"></div>
+</div>
