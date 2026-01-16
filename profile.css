@@ -9,6 +9,7 @@
     color: #444444;
     margin-top: -20px;
 }
+
 #profile-wrapper .label-title {
     font-size: 12px;
     text-transform: uppercase;
@@ -46,8 +47,8 @@
 
 #profile-wrapper p {
     margin: 0 0 2px !important;
-
 }
+
 #profile-wrapper .add-user {
     font-size: 18px;
     font-weight: bold;
@@ -71,6 +72,7 @@
     color: #FFFFFF;
     border-radius: 0px;
 }
+
 #profile-wrapper .badgeAdmin {
     display: inline-block;
     min-width: 10px;
@@ -85,9 +87,11 @@
     color: #FFFFFF;
     border-radius: 0px;
 }
+
 #profile-wrapper .account-user {
     margin-bottom: 50px;
 }
+
 #profile-wrapper .edit-button {
     float: right;
 }
@@ -120,6 +124,54 @@
 
 #profile-change-modal .validation-pattern {
     color: #a94442;
+}
+
+/* Bootstrap 5 spinner support */
+.spinner-border {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: -0.125em;
+    border: 0.15em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+.spinner-border-sm {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-width: 0.125em;
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+/* Button improvements for Bootstrap 5 */
+#profile-change-modal .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#profile-change-modal .btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 /* Responsive adjustments */

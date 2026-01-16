@@ -48,6 +48,27 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
         ProfileDetailData: authService.getActiveAccount()
     };
 
+    // Helper function to disable/enable buttons (Bootstrap 5 compatible)
+    function setButtonLoading(selector, isLoading) {
+        var btnElement = document.querySelector(selector);
+        if (btnElement) {
+            if (isLoading) {
+                btnElement.disabled = true;
+                btnElement.classList.add('disabled');
+                btnElement.setAttribute('data-original-text', btnElement.textContent);
+                btnElement.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Loading...';
+            } else {
+                btnElement.disabled = false;
+                btnElement.classList.remove('disabled');
+                var originalText = btnElement.getAttribute('data-original-text');
+                if (originalText) {
+                    btnElement.textContent = originalText;
+                    btnElement.removeAttribute('data-original-text');
+                }
+            }
+        }
+    }
+
     async function init(){
         try {
             const res = await $http({
@@ -276,8 +297,10 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                     randomNumber = String(randomNumber);
                     var integrationId = userObj.business.integrationId;
                     var displayData = strDisplayName +randomNumber;
-                    var btnSubmit = $("#profile-change-modal [type='submit']");
-                    btnSubmit.loading(true);
+                    
+                    // Bootstrap 5 compatible button loading
+                    $ctrl.isSubmitting = true;
+                    
                     var addUserObj = {
                         "firstName": $ctrl.firstName,
                         "lastName": $ctrl.lastName,
@@ -295,7 +318,7 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                         , data: addUserObj
                     }).then(
                         function (result) {
-                            btnSubmit.loading(false);
+                            $ctrl.isSubmitting = false;
                             if (result.data) {
                                 $ctrl.profileSuccess = true;
                                 $ctrl.message = result.data.userRegisteredToAccount;
@@ -309,6 +332,7 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                             }
                         },
                         function (err) {
+                            $ctrl.isSubmitting = false;
                         }
                     );
                 }
@@ -404,8 +428,10 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                 $ctrl.editUser = function () {
                     var businessId = $scope.getBusinessId();
                     var integrationId = userObj.business.integrationId;
-                    var btnSubmit = $("#profile-change-modal [type='submit']");
-                    btnSubmit.loading(true);
+                    
+                    // Bootstrap 5 compatible button loading
+                    $ctrl.isSubmitting = true;
+                    
                     var updateUserObj = {
                         "userDto": {
                             "firstName": $ctrl.UserEditObject.firstName,
@@ -430,7 +456,7 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                         , data: updateUserObj
                     }).then(
                         function (result) {
-                            btnSubmit.loading(false);
+                            $ctrl.isSubmitting = false;
                             $ctrl.profileSuccess = true;
                             if (result.data) {
                                 $ctrl.profileSuccess = true;
@@ -448,6 +474,7 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                             }
                         },
                         function (err) {
+                            $ctrl.isSubmitting = false;
                         }
                     );
                 }
@@ -502,15 +529,17 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                     } else {
                         deleteUserObj.businessId = businessId;
                     }
-                    var btnSubmit = $("#profile-change-modal [type='submit']");
-                    btnSubmit.loading(true);
+                    
+                    // Bootstrap 5 compatible button loading
+                    $ctrl.isSubmitting = true;
+                    
                     $http({
                         method: 'POST'
                         , url: siteInfo.proxy + "delete-user-v2"
                         , data: deleteUserObj
                     }).then(
                         function (result) {
-                            btnSubmit.loading(false);
+                            $ctrl.isSubmitting = false;
                             $ctrl.profileSuccess = true;
                             if (result) {
                                 if (result.data.deleteSuccessful) {
@@ -527,6 +556,7 @@ siteInfo.currentApp.controller('profileController', ['$scope','$http','$rootScop
                             getUserListByIntegrationId();
                         },
                         function (err) {
+                            $ctrl.isSubmitting = false;
                         }
                     );
                 }
