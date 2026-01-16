@@ -1,39 +1,43 @@
+<!-- Delete User Modal -->
 <div class="profile-modal-template profile-modal-content" id="profile-change-modal">
     <div class="profile-header modal-header"> </div>
     <div class="modal-body">
-        <div  ng-show="!$ctrl.profileSuccess">
+        <div ng-show="!$ctrl.profileSuccess">
             <div class="section-icon" style="float: right;">
-                <span ng-click="$ctrl.cancel()"> <img  src="/static/i/v2/icon-material-close.svg" alt="delete close icon"/></span>
+                <span ng-click="$ctrl.cancel()"> <img src="/static/i/v2/icon-material-close.svg" alt="delete close icon"/></span>
             </div>
-            <h2  class="heading">{{$ctrl.$locale.profile.profile_user_deleteuser_title}}</h2>
+            <h2 class="heading">{{$ctrl.$locale.profile.profile_user_deleteuser_title}}</h2>
         </div>
 
         <form ng-show="!$ctrl.profileSuccess" class="frmForgot" role="form" name="frmForgot" ng-submit="$ctrl.reset()"
             novalidate>
-            <div class="form-group">
+            <div class="mb-3">
                 <p class="deleteuser">{{$ctrl.$locale.profile.profile_user_deleteuser_text}} <strong
                         class="deleteuser">{{ $ctrl.userDeleteObject.emailId}}</strong>?</p>
             </div>
-            <div class="formmargin form-group row">
-                <div class="col-md-6">
-                    <a type="submit"  ng-click="$ctrl.deleteUser()"
-                        class="btn btn-primary btn-lg">{{$ctrl.$locale.profile.profile_user_deleteuser_btn}}</a>
-                </div>
-                <div class="col-md-6">
-                    <a class="btn btn-default btn-cancel btn-lg"
-                        ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_cancel}}</a>
+            <div class="formmargin mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a type="submit" ng-click="$ctrl.deleteUser()"
+                            class="btn btn-primary btn-lg">{{$ctrl.$locale.profile.profile_user_deleteuser_btn}}</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default btn-cancel btn-lg"
+                            ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_cancel}}</a>
+                    </div>
                 </div>
             </div>
         </form>
         <!--------------------  success ----------------------->
-        <div class="formmargin form-group row" ng-show="$ctrl.profileSuccess">
-            <div class="col-md-12">
-                <span class="profileSuccess"> {{$ctrl.message}}</span>
-
-            </div>
-            <div class="col-md-4  btnheight">
-                <a class="btn btn-default  btn-ok btn-lg"
-                    ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_ok}}</a>
+        <div class="formmargin mb-3" ng-show="$ctrl.profileSuccess">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="profileSuccess"> {{$ctrl.message}}</span>
+                </div>
+                <div class="col-md-4 btnheight">
+                    <a class="btn btn-default btn-ok btn-lg"
+                        ng-click="$ctrl.cancel()">{{$ctrl.$locale.profile.profile_user_info_ok}}</a>
+                </div>
             </div>
         </div>
     </div>
